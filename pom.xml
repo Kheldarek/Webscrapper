@@ -14,6 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>4.12</junit.version>
     <jsoup.version>1.8.3</jsoup.version>
+    <mockito.version>2.0.46-beta</mockito.version>
   </properties>
 
   <dependencies>
@@ -28,5 +29,10 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>org.mockito</groupId>
+    	<artifactId>mockito-core</artifactId>
+    	<version>${mockito.version}</version>
+	</dependency>
   </dependencies>
 </project>
