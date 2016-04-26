@@ -1,4 +1,4 @@
-package org.fsps.webscrapper.page;
+package org.fsps.webscrapper.searchingLogic.page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,15 @@ public class TextualContent implements WebPage {
 	
 	@Override
 	public List<String> getLinks() {
-		List<String> result = getLinksContaining("");
+		return getLinksContaining("");
+	}
+	
+	@Override
+	public List<String> getLinksContaining(List<String> keywords) {
+		List<String> result = new ArrayList<>();
+		for(String match : keywords) {
+			result.addAll(getLinksContaining(match));
+		}
 		return result;
 	}
 	
@@ -36,6 +44,15 @@ public class TextualContent implements WebPage {
 	@Override
 	public List<String> getParagraphs() {
 		return getParagraphsContaining("");
+	}
+	
+	@Override
+	public List<String> getParagraphsContaining(List<String> keywords) {
+		List<String> result = new ArrayList<>();
+		for(String match : keywords) {
+			result.addAll(getParagraphsContaining(match));
+		}
+		return result;
 	}
 	
 	@Override

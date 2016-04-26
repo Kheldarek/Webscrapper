@@ -1,7 +1,7 @@
 package org.fsps.webscrapper;
 
-import org.fsps.webscrapper.page.TestTextualContent;
-import org.fsps.webscrapper.parser.TestJsoupParser;
+import org.fsps.webscrapper.searchingLogic.page.TestTextualContent;
+import org.fsps.webscrapper.searchingLogic.parser.TestJsoupParser;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

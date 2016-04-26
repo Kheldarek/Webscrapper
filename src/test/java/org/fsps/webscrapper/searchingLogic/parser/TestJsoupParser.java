@@ -1,6 +1,6 @@
-package org.fsps.webscrapper.parser;
+package org.fsps.webscrapper.searchingLogic.parser;
 
-import org.fsps.webscrapper.page.WebPage;
+import org.fsps.webscrapper.searchingLogic.page.WebPage;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

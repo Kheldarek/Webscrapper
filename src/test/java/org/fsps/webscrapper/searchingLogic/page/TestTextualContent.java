@@ -1,4 +1,4 @@
-package org.fsps.webscrapper.page;
+package org.fsps.webscrapper.searchingLogic.page;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
