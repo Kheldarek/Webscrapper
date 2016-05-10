@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.fsps.webscrapper.GUI.FileSelector.FileSelector;
+import org.fsps.webscrapper.presenter.SeekPresenter;
 import org.fsps.webscrapper.view.SearchForm;
 
 public class WebscrapperGUI implements SearchForm
@@ -30,6 +31,7 @@ public class WebscrapperGUI implements SearchForm
     private VBox vbox;
     private MenuBar menu;
     private Menu file,edit,help;
+    private SeekPresenter presenter;
 
 
 	
@@ -115,6 +117,11 @@ public class WebscrapperGUI implements SearchForm
         return Arrays.asList(urls.getText().split("[;]"));
 
     }
+
+	@Override
+	public void setPresenter(SeekPresenter presenter) {
+		this.presenter = presenter;
+	}
 
 
 }
