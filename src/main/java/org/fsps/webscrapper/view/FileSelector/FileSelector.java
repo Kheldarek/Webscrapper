@@ -1,18 +1,14 @@
-package org.fsps.webscrapper.GUI.FileSelector;
+package org.fsps.webscrapper.view.FileSelector;
 
 /**
  * Created by psend on 10.05.2016.
  */
 
-import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -25,7 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.fsps.webscrapper.GUI.mainWindow.WebscrapperGUI;
+import org.fsps.webscrapper.view.mainWindow.WebscrapperGUI;
 
 public final class FileSelector extends Application
 {

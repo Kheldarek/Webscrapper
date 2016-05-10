@@ -1,6 +1,6 @@
 package org.fsps.webscrapper;
 
-import org.fsps.webscrapper.GUI.mainWindow.WebscrapperGUI;
+import org.fsps.webscrapper.view.mainWindow.WebscrapperGUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

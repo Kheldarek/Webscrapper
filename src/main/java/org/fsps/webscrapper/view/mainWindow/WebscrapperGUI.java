@@ -1,9 +1,10 @@
-package org.fsps.webscrapper.GUI.mainWindow;
+package org.fsps.webscrapper.view.mainWindow;
 /**
  * Created by psend on 26.04.2016.
  */
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -11,14 +12,15 @@ import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.fsps.webscrapper.GUI.FileSelector.FileSelector;
+import org.fsps.webscrapper.presenter.SearchEnginePresenter;
+import org.fsps.webscrapper.searchingLogic.BasicSearchEngine;
+import org.fsps.webscrapper.searchingLogic.parser.JsoupParser;
+import org.fsps.webscrapper.view.FileSelector.FileSelector;
 import org.fsps.webscrapper.presenter.SeekPresenter;
 import org.fsps.webscrapper.view.SearchForm;
 
@@ -44,16 +46,17 @@ public class WebscrapperGUI implements SearchForm
         keywords = (TextField)vbox.getChildren().get(2);
         results = (TextArea)root.getCenter();
         results.setEditable(false);
+        results.setWrapText(true);
         menu = (MenuBar) vbox.getChildren().get(0);
         file = menu.getMenus().get(0);
         edit = menu.getMenus().get(1);
         help = menu.getMenus().get(2);
-        WebscrapperGUI x = this;
+        WebscrapperGUI mainwindow = this;
         file.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 keywords.setText("");
-                FileSelector root= new FileSelector(x,false);
+                FileSelector root= new FileSelector(mainwindow,false);
                 Stage stage = new Stage();
                 root.start(stage);
             }
@@ -62,21 +65,38 @@ public class WebscrapperGUI implements SearchForm
             @Override
             public void handle(ActionEvent event) {
                 urls.setText("");
-                FileSelector root= new FileSelector(x,true);
+                FileSelector root= new FileSelector(mainwindow,true);
                 Stage stage = new Stage();
                 root.start(stage);
             }
         });
+		edit.getItems().get(0).setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				urls.setText("");
+				keywords.setText("");
+				results.setText("");
+			}
+		});
 
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                presenter = new SearchEnginePresenter(new BasicSearchEngine(),new JsoupParser());
+                try
+                {
+                presenter.findByKeywords(mainwindow,CreateKeywordsList(),CreateUrlList(),4);
 
-                CreateUrlList();
-                CreateKeywordsList();
+
                 //Search
-            }
-        });
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+        }});
 
     }
 	
@@ -90,17 +110,22 @@ public class WebscrapperGUI implements SearchForm
     }
 
     @Override
-    public void actualizeResultSet(Collection<String> results)
+    public void actualizeResultSet(List<List<String>> results, Collection<String> urls)
     {
-
+        ShowResults(results,(List<String>)urls);
     }
 
-    private void ShowResults(List<String> res)
+    private void ShowResults(List<List<String>> res, List<String> urls)
     {
-        String res_to_show = new String();
-        for (String x:res)
+        results.setText("");
+		String res_to_show = new String();
+        ArrayList<String> tmp = (ArrayList<String>) urls;
+        for (Collection<String> x:res)
         {
-            res_to_show += x + "\n\n";
+            res_to_show += tmp.get(res.indexOf(x)) + "\n";
+            for(String y : x)
+                res_to_show += y + "\n";
+            res_to_show += "\n";
         }
         results.setText(res_to_show);
     }
