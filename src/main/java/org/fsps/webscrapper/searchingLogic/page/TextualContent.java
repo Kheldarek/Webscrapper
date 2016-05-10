@@ -74,5 +74,25 @@ public class TextualContent implements WebPage {
 		}
 		return result;
 	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if(object == null || !(object instanceof TextualContent)) {
+			return false;
+		}
+		TextualContent secondPage = (TextualContent) object;
+		if(isTheSameObject(secondPage) || areFieldsIdentical(secondPage)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isTheSameObject(TextualContent secondPage) {
+		return secondPage == this;
+	}
+
+	private boolean areFieldsIdentical(TextualContent secondPage) {
+		return sourceUrl.equals(secondPage.sourceUrl) && parsedPage.equals(secondPage.parsedPage);
+	}
 
 }
