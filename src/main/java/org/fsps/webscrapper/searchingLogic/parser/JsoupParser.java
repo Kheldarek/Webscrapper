@@ -1,14 +1,13 @@
 package org.fsps.webscrapper.searchingLogic.parser;
 
+import static org.jsoup.Jsoup.connect;
+
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fsps.webscrapper.searchingLogic.page.WebPage;
-import org.jsoup.HttpStatusException;
 import org.fsps.webscrapper.searchingLogic.page.TextualContent;
-import static org.jsoup.Jsoup.connect;
+import org.fsps.webscrapper.searchingLogic.page.WebPage;
 
 public class JsoupParser implements WebPageParser {	
 	@Override
