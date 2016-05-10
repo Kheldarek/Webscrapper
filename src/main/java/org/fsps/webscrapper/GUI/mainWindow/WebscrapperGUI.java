@@ -41,6 +41,7 @@ public class WebscrapperGUI implements SearchForm
         urls = (TextField)vbox.getChildren().get(1);
         keywords = (TextField)vbox.getChildren().get(2);
         results = (TextArea)root.getCenter();
+        results.setEditable(false);
         menu = (MenuBar) vbox.getChildren().get(0);
         file = menu.getMenus().get(0);
         edit = menu.getMenus().get(1);
@@ -49,6 +50,7 @@ public class WebscrapperGUI implements SearchForm
         file.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                keywords.setText("");
                 FileSelector root= new FileSelector(x,false);
                 Stage stage = new Stage();
                 root.start(stage);
@@ -57,6 +59,7 @@ public class WebscrapperGUI implements SearchForm
         file.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                urls.setText("");
                 FileSelector root= new FileSelector(x,true);
                 Stage stage = new Stage();
                 root.start(stage);
@@ -66,9 +69,9 @@ public class WebscrapperGUI implements SearchForm
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                CreateKeywordsList();
+
                 CreateUrlList();
-                System.out.println("Hello World!");
+                System.out.println(CreateKeywordsList());
                 //Search
             }
         });
@@ -103,7 +106,7 @@ public class WebscrapperGUI implements SearchForm
     private List<String> CreateKeywordsList()
     {
         String rawKeywords = keywords.getText();
-        return Arrays.asList(rawKeywords.split("[,]"));
+        return Arrays.asList(rawKeywords.split("[;]"));
 
     }
 
