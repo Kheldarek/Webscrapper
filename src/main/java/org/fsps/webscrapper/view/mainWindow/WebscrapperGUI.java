@@ -4,11 +4,9 @@ package org.fsps.webscrapper.view.mainWindow;
  */
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +32,7 @@ public class WebscrapperGUI implements SearchForm
     private MenuBar menu;
     private Menu file,edit,help;
     private SeekPresenter presenter;
+	private int depth=2;
 
 
 	
@@ -51,25 +50,64 @@ public class WebscrapperGUI implements SearchForm
         file = menu.getMenus().get(0);
         edit = menu.getMenus().get(1);
         help = menu.getMenus().get(2);
-        WebscrapperGUI mainwindow = this;
-        file.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                keywords.setText("");
-                FileSelector root= new FileSelector(mainwindow,false);
-                Stage stage = new Stage();
-                root.start(stage);
-            }
-        });
-        file.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                urls.setText("");
-                FileSelector root= new FileSelector(mainwindow,true);
-                Stage stage = new Stage();
-                root.start(stage);
-            }
-        });
+		SetEvents();
+
+    }
+
+	private void ChangeDepth()
+	{
+		TextInputDialog dialog = new TextInputDialog(depth+"");
+		dialog.setTitle("Change Search Depth");
+		dialog.setHeaderText("How deep do You want to search?");
+		dialog.setContentText("Enter depth level");
+
+// Traditional way to get the response value.
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+			try
+			{
+				depth = Integer.parseInt(result.get());
+			}
+			catch(NumberFormatException e)
+			{
+				depth = 2;
+			}
+		}
+
+	}
+
+	private void SetEvents()
+	{
+		WebscrapperGUI mainwindow = this;
+
+		file.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				keywords.setText("");
+				FileSelector root= new FileSelector(mainwindow,false);
+				Stage stage = new Stage();
+				root.start(stage);
+			}
+		});
+		file.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				urls.setText("");
+				FileSelector root= new FileSelector(mainwindow,true);
+				Stage stage = new Stage();
+				root.start(stage);
+			}
+		});
+
+		file.getItems().get(2).setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				Platform.exit();
+			}
+		});
+
 		edit.getItems().get(0).setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
@@ -80,26 +118,46 @@ public class WebscrapperGUI implements SearchForm
 				results.setText("");
 			}
 		});
+		edit.getItems().get(1).setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				ChangeDepth();
+			}
+		});
+		help.getItems().get(0).setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("About");
+				alert.setHeaderText("Webscrapper");
+				alert.setContentText("Metasearch Engine developed by Piotr Sendrowski and Filip Sochal");
+				alert.showAndWait();
+			}
+		});
 
-        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                presenter = new SearchEnginePresenter(new BasicSearchEngine(),new JsoupParser());
-                try
-                {
-                presenter.findByKeywords(mainwindow,CreateKeywordsList(),CreateUrlList(),4);
+		searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				presenter = new SearchEnginePresenter(new BasicSearchEngine(),new JsoupParser());
+				try
+				{
+					presenter.findByKeywords(mainwindow,CreateKeywordsList(),CreateUrlList(),depth);
 
 
-                //Search
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-        }});
+					//Search
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 
-    }
-	
+			}});
+	}
+
 	public Scene getScene() {
 		return scene;
 	}
