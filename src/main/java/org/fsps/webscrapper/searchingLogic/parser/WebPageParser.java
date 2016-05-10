@@ -5,8 +5,9 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import org.fsps.webscrapper.searchingLogic.page.WebPage;
+import org.jsoup.HttpStatusException;
 
 public interface WebPageParser {
-	public WebPage parse(String url) throws IOException, UnknownHostException;
-	public List<WebPage> parse(List<String> urls) throws IOException, UnknownHostException;
+	public List<WebPage> parse(List<String> urls);
+	public WebPage parse(String url) throws  IOException;
 }

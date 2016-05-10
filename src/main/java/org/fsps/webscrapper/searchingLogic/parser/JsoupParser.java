@@ -6,24 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fsps.webscrapper.searchingLogic.page.WebPage;
+import org.jsoup.HttpStatusException;
 import org.fsps.webscrapper.searchingLogic.page.TextualContent;
 import static org.jsoup.Jsoup.connect;
 
-public class JsoupParser implements WebPageParser {
-
+public class JsoupParser implements WebPageParser {	
 	@Override
-	public WebPage parse(String url) throws IOException, UnknownHostException {
-		WebPage parsingResult = new TextualContent(connect(url).get(), url);
-		return parsingResult;
-	}
-
-	@Override
-	public List<WebPage> parse(List<String> urls) throws IOException, UnknownHostException {
+	public List<WebPage> parse(List<String> urls) {
 		List<WebPage> result = new ArrayList<>();
 		for(String url : urls) {
-			result.add(parse(url));
+			WebPage page = null;
+			try {
+				page = parse(url);
+			} catch(IOException ioe) {}
+			if(page != null) {
+				result.add(page);
+			}
 		}
 		return result;
 	}
-
+	
+	@Override
+	public WebPage parse(String url) throws IOException {
+		WebPage parsingResult = null;
+		parsingResult = new TextualContent(connect(url).get(), url);
+		return parsingResult;
+	}
 }
