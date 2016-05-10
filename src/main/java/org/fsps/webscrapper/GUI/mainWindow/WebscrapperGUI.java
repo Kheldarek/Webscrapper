@@ -71,7 +71,7 @@ public class WebscrapperGUI implements SearchForm
             public void handle(ActionEvent event) {
 
                 CreateUrlList();
-                System.out.println(CreateKeywordsList());
+                CreateKeywordsList();
                 //Search
             }
         });

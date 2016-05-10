@@ -30,7 +30,6 @@ import org.fsps.webscrapper.GUI.mainWindow.WebscrapperGUI;
 public final class FileSelector extends Application
 {
 
-    private Desktop desktop = Desktop.getDesktop();
     WebscrapperGUI x;
     boolean openUrl;
 
@@ -111,14 +110,6 @@ public final class FileSelector extends Application
 
     private void openFile(File file)
     {
-       /* try {
-            desktop.open(file);
-        } catch (IOException ex) {
-            Logger.getLogger(
-                    FileSelector.class.getName()).log(
-                    Level.SEVERE, null, ex
-            );
-        }*/
         StringBuilder contents = new StringBuilder();
 
         try
@@ -126,7 +117,7 @@ public final class FileSelector extends Application
             BufferedReader input = new BufferedReader(new FileReader(file));
             try
             {
-                String line = null; //not declared within while loop
+                String line = null;
 
                 while ((line = input.readLine()) != null)
                 {
