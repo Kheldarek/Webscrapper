@@ -23,122 +23,96 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.fsps.webscrapper.view.mainWindow.WebscrapperGUI;
 
-public final class FileSelector extends Application
-{
+public final class FileSelector extends Application {
 
-    WebscrapperGUI x;
-    boolean openUrl;
+	WebscrapperGUI x;
+	boolean openUrl;
 
-    public FileSelector(WebscrapperGUI gui, boolean url)
-    {
-        x = gui;
-        openUrl = url;
-    }
+	public FileSelector(WebscrapperGUI gui, boolean url) {
+		x = gui;
+		openUrl = url;
+	}
 
-    @Override
-    public void start(final Stage stage)
-    {
-        stage.setTitle("Choose File");
+	@Override
+	public void start(final Stage stage) {
+		stage.setTitle("Choose File");
 
-        final FileChooser fileChooser = new FileChooser();
+		final FileChooser fileChooser = new FileChooser();
 
-        final Button openButton = new Button("Open file");
-        final Button openMultipleButton = new Button("Open files");
+		final Button openButton = new Button("Open file");
+		final Button openMultipleButton = new Button("Open files");
 
-        openButton.setOnAction(
-                new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(final ActionEvent e)
-                    {
-                        configureFileChooser(fileChooser);
-                        File file = fileChooser.showOpenDialog(stage);
-                        if (file != null)
-                        {
-                            openFile(file);
-                        }
-                    }
-                });
+		openButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent e) {
+				configureFileChooser(fileChooser);
+				File file = fileChooser.showOpenDialog(stage);
+				if(file != null) {
+					openFile(file);
+				}
+			}
+		});
 
-        openMultipleButton.setOnAction(
-                new EventHandler<ActionEvent>()
-                {
-                    @Override
-                    public void handle(final ActionEvent e)
-                    {
-                        configureFileChooser(fileChooser);
-                        List<File> list =
-                                fileChooser.showOpenMultipleDialog(stage);
-                        if (list != null)
-                        {
-                            for (File file : list)
-                            {
-                                openFile(file);
-                            }
-                        }
-                    }
-                });
+		openMultipleButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent e) {
+				configureFileChooser(fileChooser);
+				List<File> list = fileChooser.showOpenMultipleDialog(stage);
+				if(list != null) {
+					for(File file : list) {
+						openFile(file);
+					}
+				}
+			}
+		});
 
-        final GridPane inputGridPane = new GridPane();
+		final GridPane inputGridPane = new GridPane();
 
-        GridPane.setConstraints(openButton, 0, 0);
-        GridPane.setConstraints(openMultipleButton, 1, 0);
-        inputGridPane.setHgap(6);
-        inputGridPane.setVgap(6);
-        inputGridPane.getChildren().addAll(openButton, openMultipleButton);
+		GridPane.setConstraints(openButton, 0, 0);
+		GridPane.setConstraints(openMultipleButton, 1, 0);
+		inputGridPane.setHgap(6);
+		inputGridPane.setVgap(6);
+		inputGridPane.getChildren().addAll(openButton, openMultipleButton);
 
-        final Pane rootGroup = new VBox(12);
-        rootGroup.getChildren().addAll(inputGridPane);
-        rootGroup.setPadding(new Insets(12, 12, 12, 12));
+		final Pane rootGroup = new VBox(12);
+		rootGroup.getChildren().addAll(inputGridPane);
+		rootGroup.setPadding(new Insets(12, 12, 12, 12));
 
-        stage.setScene(new Scene(rootGroup));
-        stage.show();
-    }
+		stage.setScene(new Scene(rootGroup));
+		stage.show();
+	}
 
-    private static void configureFileChooser(final FileChooser fileChooser)
-    {
-        fileChooser.setTitle("Choose File");
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
-    }
+	private static void configureFileChooser(final FileChooser fileChooser) {
+		fileChooser.setTitle("Choose File");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+	}
 
+	private void openFile(File file) {
+		StringBuilder contents = new StringBuilder();
 
-    private void openFile(File file)
-    {
-        StringBuilder contents = new StringBuilder();
+		try {
+			BufferedReader input = new BufferedReader(new FileReader(file));
+			try {
+				String line = null;
 
-        try
-        {
-            BufferedReader input = new BufferedReader(new FileReader(file));
-            try
-            {
-                String line = null;
+				while ((line = input.readLine()) != null) {
+					contents.append(line);
+					contents.append(";");
+				}
+			} finally {
+				input.close();
+			}
+		} catch(IOException ex) {
+			ex.printStackTrace();
+		}
+		String tmp;
+		if(openUrl) {
+			tmp = x.urls.getText();
+			x.urls.setText(tmp + ";" + contents.toString());
+		} else {
+			tmp = x.keywords.getText();
+			x.keywords.setText(tmp + ";" + contents.toString());
+		}
 
-                while ((line = input.readLine()) != null)
-                {
-                    contents.append(line);
-                    contents.append(";");
-                }
-            } finally
-            {
-                input.close();
-            }
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-        String tmp;
-        if (openUrl)
-        {
-            tmp = x.urls.getText();
-            x.urls.setText(tmp + ";" + contents.toString());
-        }
-        else
-        {
-            tmp = x.keywords.getText();
-            x.keywords.setText(tmp + ";" + contents.toString());
-        }
-
-    }
+	}
 }
