@@ -11,7 +11,7 @@ public class BasicSearchEngine implements SearchEngine {
 	private int currentLevel = 0;
 	private List<WebPage> results = new ArrayList<>(0);
 	private WebPageParser parser = new JsoupParser();
-	
+
 	public List<WebPage> findByKeywords(List<String> keywords, List<WebPage> startPages, int deepLevel) {
 		for(WebPage currentPage : startPages) {
 			if(currentPage.getParagraphsContaining(keywords).size() > 0 && !results.contains(currentPage)) {
@@ -23,7 +23,7 @@ public class BasicSearchEngine implements SearchEngine {
 		}
 		return results;
 	}
-	
+
 	private void searchDeep(List<String> keywords, List<WebPage> startPages, int deepLevel) {
 		for(WebPage currentPage : startPages) {
 			if(currentPage.getParagraphsContaining(keywords).size() > 0 && !results.contains(currentPage)) {
