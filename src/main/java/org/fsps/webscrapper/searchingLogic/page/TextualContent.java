@@ -16,17 +16,17 @@ public class TextualContent implements WebPage {
 		this.parsedPage = parsedPage;
 		this.sourceUrl = sourceUrl;
 	}
-	
+
 	@Override
 	public String getSourceUrl() {
 		return sourceUrl;
 	}
-	
+
 	@Override
 	public List<String> getLinks() {
 		return getLinksContaining("");
 	}
-	
+
 	@Override
 	public List<String> getLinksContaining(List<String> keywords) {
 		List<String> result = new ArrayList<>();
@@ -35,7 +35,7 @@ public class TextualContent implements WebPage {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public List<String> getLinksContaining(String match) {
 		return getElementsContaining(match, "a", elem -> elem.attr("abs:href"));
@@ -45,7 +45,7 @@ public class TextualContent implements WebPage {
 	public List<String> getParagraphs() {
 		return getParagraphsContaining("");
 	}
-	
+
 	@Override
 	public List<String> getParagraphsContaining(List<String> keywords) {
 		List<String> result = new ArrayList<>();
@@ -54,18 +54,19 @@ public class TextualContent implements WebPage {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public List<String> getParagraphsContaining(String match) {
 		return getElementsContaining(match, "p", elem -> elem.text());
 	}
-	
+
 	private List<String> getElementsContaining(String match, String tag, Function<Element, String> elementReader) {
 		Elements taggedPageContent = parsedPage.getElementsByTag(tag);
 		return createMatchingElemsList(match, elementReader, taggedPageContent);
 	}
 
-	private List<String> createMatchingElemsList(String match, Function<Element, String> elementReader, Elements pageContent) {
+	private List<String> createMatchingElemsList(String match, Function<Element, String> elementReader,
+			Elements pageContent) {
 		List<String> result = new ArrayList<>(pageContent.size());
 		for(Element taggedElement : pageContent) {
 			if(taggedElement.toString().contains(match)) {
@@ -74,7 +75,7 @@ public class TextualContent implements WebPage {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object object) {
 		if(object == null || !(object instanceof TextualContent)) {
