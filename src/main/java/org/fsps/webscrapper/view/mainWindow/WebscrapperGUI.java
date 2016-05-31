@@ -138,7 +138,7 @@ public class WebscrapperGUI implements SearchForm
 			TextInputDialog dialog = new TextInputDialog();
 			dialog.setTitle("Choose file path");
 			dialog.setHeaderText("Where do You want to export file?");
-			dialog.setContentText("exportTXT");
+			dialog.setContentText("File name");
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent())
@@ -155,7 +155,7 @@ public class WebscrapperGUI implements SearchForm
 			TextInputDialog dialog = new TextInputDialog();
 			dialog.setTitle("Choose file path");
 			dialog.setHeaderText("Where do You want to export file?");
-			dialog.setContentText("exportHTML");
+			dialog.setContentText("File name");
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent())

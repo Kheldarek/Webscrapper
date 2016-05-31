@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by psend on 30.05.2016.
@@ -29,16 +30,23 @@ public class Exporter
 	{
 		String content = HTML_BEGIN;
 		File file = new File(path);
+
 		for (int i = 0; i < urls.size(); i++)
 		{
-			content = content + String.format(HTML_LINK, urls.get(i) + "\n\n");
+			content = content + String.format(HTML_LINK, urls.get(i),urls.get(i) ) + "\n\n";
 			for (String tmp : paragraphs.get(i))
 			{
-				content += String.format(HTML_PARAGRAPH, tmp + "\n\n");
+				content += String.format(HTML_PARAGRAPH, tmp)  +  "\n\n" ;
 			}
 		}
 
 		content += HTML_END;
+		SavetoFile(file,content);
+
+	}
+
+	private void SavetoFile(File file, String content)
+	{
 		try
 		{
 			FileWriter fileWriter = null;
@@ -51,10 +59,9 @@ public class Exporter
 		}
 	}
 
-
 	public void ExportToTxt(String path)
 	{
-		File txtFile = new File(path);
+		File file = new File(path);
 		String content = "";
 		for (int i = 0; i < urls.size(); i++)
 		{
@@ -64,16 +71,9 @@ public class Exporter
 				content += tmp + "\n\n";
 			}
 		}
-		try
-		{
-			FileWriter fileWriter = null;
-			fileWriter = new FileWriter(txtFile);
-			fileWriter.write(content);
-			fileWriter.close();
-		} catch (IOException ex)
-		{
-			System.err.println(ex.getMessage());
-		}
+
+		SavetoFile(file,content);
+
 
 
 	}
