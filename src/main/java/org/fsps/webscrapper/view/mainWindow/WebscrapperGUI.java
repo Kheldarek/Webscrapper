@@ -145,9 +145,7 @@ public class WebscrapperGUI implements SearchForm
 				presenter = new SearchEnginePresenter(new BasicSearchEngine(),new JsoupParser());
 				try
 				{
-					long time = System.nanoTime();
 					presenter.findByKeywords(mainwindow,CreateKeywordsList(),CreateUrlList(),depth);
-					System.out.println("Time: " + ((System.nanoTime() - time)/1000000000));
 
 					//Search
 				}
