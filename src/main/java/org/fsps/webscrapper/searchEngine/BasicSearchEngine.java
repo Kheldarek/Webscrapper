@@ -1,12 +1,12 @@
-package org.fsps.webscrapper.searchingLogic;
+package org.fsps.webscrapper.searchEngine;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import org.fsps.webscrapper.searchingLogic.page.WebPage;
-import org.fsps.webscrapper.searchingLogic.parser.JsoupParser;
-import org.fsps.webscrapper.searchingLogic.parser.WebPageParser;
+import org.fsps.webscrapper.searchEngine.page.WebPage;
+import org.fsps.webscrapper.searchEngine.parser.JsoupParser;
+import org.fsps.webscrapper.searchEngine.parser.WebPageParser;
 
 public class BasicSearchEngine implements SearchEngine {
 	private int currentLevel = 0;
@@ -16,12 +16,8 @@ public class BasicSearchEngine implements SearchEngine {
 
 	public List<WebPage> findByKeywords(List<String> keywords, List<WebPage> startPages, int deepLevel) {
 		this.deepLevel = deepLevel;
-		search(keywords, startPages, this::searchTreeFromStartPage, 5);
+		search(keywords, startPages, this::searchTreeFromStartPage, 1000);
 		return results;
-	}
-
-	private void searchDeep(List<String> keywords, List<WebPage> startPages) {
-		search(keywords, startPages, this::searchSublinks, 5);
 	}
 
 	private void search(List<String> keywords, List<WebPage> startPages,
@@ -42,9 +38,14 @@ public class BasicSearchEngine implements SearchEngine {
 	}
 
 	private void searchSublinks(List<String> keywords, List<WebPage> startPages) {
+		System.out.println("Liczba stron: " + startPages.size());
 		if(currentLevel < deepLevel) {
 			currentLevel++;
 			searchDeep(keywords, startPages);
 		}
+	}
+	
+	private void searchDeep(List<String> keywords, List<WebPage> startPages) {
+		search(keywords, startPages, this::searchSublinks, 1000);
 	}
 }

@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.List;
 
+import org.fsps.webscrapper.searchEngine.page.TextualContent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

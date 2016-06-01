@@ -1,4 +1,4 @@
-package org.fsps.webscrapper.searchingLogic.page;
+package org.fsps.webscrapper.searchEngine.page;
 
 import java.util.ArrayList;
 import java.util.List;

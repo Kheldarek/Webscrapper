@@ -16,10 +16,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.fsps.webscrapper.presenter.SearchEnginePresenter;
-import org.fsps.webscrapper.searchingLogic.BasicSearchEngine;
-import org.fsps.webscrapper.searchingLogic.parser.JsoupParser;
 import org.fsps.webscrapper.view.FileSelector.FileSelector;
 import org.fsps.webscrapper.presenter.SeekPresenter;
+import org.fsps.webscrapper.searchEngine.BasicSearchEngine;
+import org.fsps.webscrapper.searchEngine.parser.JsoupParser;
 import org.fsps.webscrapper.view.SearchForm;
 
 public class WebscrapperGUI implements SearchForm
@@ -145,8 +145,9 @@ public class WebscrapperGUI implements SearchForm
 				presenter = new SearchEnginePresenter(new BasicSearchEngine(),new JsoupParser());
 				try
 				{
+					long time = System.nanoTime();
 					presenter.findByKeywords(mainwindow,CreateKeywordsList(),CreateUrlList(),depth);
-
+					System.out.println("Time: " + ((System.nanoTime() - time)/1000000000));
 
 					//Search
 				}

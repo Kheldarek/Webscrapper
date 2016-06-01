@@ -1,13 +1,12 @@
-package org.fsps.webscrapper.searchingLogic.parser;
+package org.fsps.webscrapper.searchEngine.parser;
 
 import static org.jsoup.Jsoup.connect;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fsps.webscrapper.searchingLogic.page.TextualContent;
-import org.fsps.webscrapper.searchingLogic.page.WebPage;
+import org.fsps.webscrapper.searchEngine.page.TextualContent;
+import org.fsps.webscrapper.searchEngine.page.WebPage;
 
 public class JsoupParser implements WebPageParser {
 	@Override
@@ -17,7 +16,7 @@ public class JsoupParser implements WebPageParser {
 			WebPage page = null;
 			try {
 				page = parse(url);
-			} catch(IOException ioe) {
+			} catch(Exception e) {
 			}
 			if(page != null) {
 				result.add(page);
@@ -27,7 +26,7 @@ public class JsoupParser implements WebPageParser {
 	}
 
 	@Override
-	public WebPage parse(String url) throws IOException {
+	public WebPage parse(String url) throws Exception {
 		WebPage parsingResult = null;
 		parsingResult = new TextualContent(connect(url).get(), url);
 		return parsingResult;
