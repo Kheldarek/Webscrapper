@@ -26,6 +26,18 @@ public class TextualContent implements WebPage {
 	public List<String> getLinks() {
 		return getLinksContaining("");
 	}
+	
+	@Override
+	public List<String> getLinksContaining(List<String> keywords, int urlsLimit) {
+		List<String> result = new ArrayList<>();
+		for(String match : keywords) {
+			result.addAll(getLinksContaining(match));
+		}
+		if(result.size() > urlsLimit) {
+			return result.subList(0, urlsLimit);
+		}
+		return result;
+	}
 
 	@Override
 	public List<String> getLinksContaining(List<String> keywords) {
@@ -69,7 +81,7 @@ public class TextualContent implements WebPage {
 			Elements pageContent) {
 		List<String> result = new ArrayList<>(pageContent.size());
 		for(Element taggedElement : pageContent) {
-			if(taggedElement.toString().contains(match)) {
+			if(taggedElement.toString().toLowerCase().contains(match.toLowerCase())) {
 				result.add(elementReader.apply(taggedElement));
 			}
 		}
@@ -95,5 +107,4 @@ public class TextualContent implements WebPage {
 	private boolean areFieldsIdentical(TextualContent secondPage) {
 		return sourceUrl.equals(secondPage.sourceUrl) && parsedPage.equals(secondPage.parsedPage);
 	}
-
 }
