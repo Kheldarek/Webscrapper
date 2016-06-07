@@ -15,7 +15,7 @@ public class Exporter
 {
 	List<List<String>> paragraphs;
 	List<String> urls;
-	final static String HTML_BEGIN = "<html><head><title>Exported from Websrapper</title></head><body>";
+	final static String HTML_BEGIN = "<html><head><title>Exported from Websrapper</title><meta charset=\"UTF-8\"></head><body>";
 	final static String HTML_END = "</body></html>";
 	final static String HTML_PARAGRAPH = "<p>%s</p>";
 	final static String HTML_LINK = "<a href = %s >%s</a>";
