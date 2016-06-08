@@ -42,26 +42,20 @@ public final class FileSelector extends Application {
 		final Button openButton = new Button("Open file");
 		final Button openMultipleButton = new Button("Open files");
 
-		openButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent e) {
-				configureFileChooser(fileChooser);
-				File file = fileChooser.showOpenDialog(stage);
-				if(file != null) {
-					openFile(file);
-				}
+		openButton.setOnAction(e -> {
+			configureFileChooser(fileChooser);
+			File file = fileChooser.showOpenDialog(stage);
+			if(file != null) {
+				openFile(file);
 			}
 		});
 
-		openMultipleButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(final ActionEvent e) {
-				configureFileChooser(fileChooser);
-				List<File> list = fileChooser.showOpenMultipleDialog(stage);
-				if(list != null) {
-					for(File file : list) {
-						openFile(file);
-					}
+		openMultipleButton.setOnAction(e -> {
+			configureFileChooser(fileChooser);
+			List<File> list = fileChooser.showOpenMultipleDialog(stage);
+			if(list != null) {
+				for(File file : list) {
+					openFile(file);
 				}
 			}
 		});
