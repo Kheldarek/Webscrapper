@@ -65,7 +65,7 @@ public class WebscrapperGUI implements SearchForm
 		dialog.setHeaderText("How deep do You want to search?");
 		dialog.setContentText("Enter depth level");
 
-// Traditional way to get the response value.
+
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent())
 		{
@@ -116,6 +116,7 @@ public class WebscrapperGUI implements SearchForm
 
 
 		searchBtn.setOnAction(event -> {
+			
 			presenter = new SearchEnginePresenter(new BasicSearchEngine(), new JsoupParser());
 			try
 			{
@@ -143,7 +144,7 @@ public class WebscrapperGUI implements SearchForm
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent())
 			{
-				path = result.get();
+				path = result.get()+".txt";
 			}
 
 			exporter.ExportToTxt(path);
@@ -160,7 +161,7 @@ public class WebscrapperGUI implements SearchForm
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent())
 			{
-					path = result.get();
+					path = result.get()+".html";
 			}
 			exporter.ExportToHTML(path);
 		});
