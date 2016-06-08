@@ -65,7 +65,7 @@ public class WebscrapperGUI implements SearchForm
 		dialog.setHeaderText("How deep do You want to search?");
 		dialog.setContentText("Enter depth level");
 
-// Traditional way to get the response value.
+
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent())
 		{
@@ -116,6 +116,7 @@ public class WebscrapperGUI implements SearchForm
 
 
 		searchBtn.setOnAction(event -> {
+
 			presenter = new SearchEnginePresenter(new BasicSearchEngine(), new JsoupParser());
 			try
 			{
@@ -136,14 +137,14 @@ public class WebscrapperGUI implements SearchForm
 		edit.getItems().get(2).setOnAction(event -> {
 			String path="exportTXT";
 			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Choose file path");
-			dialog.setHeaderText("Where do You want to export file?");
+			dialog.setTitle("Choose TXT file path");
+			dialog.setHeaderText("Enter path to save your search results");
 			dialog.setContentText("File name");
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent())
 			{
-				path = result.get();
+				path = result.get()+".txt";
 			}
 
 			exporter.ExportToTxt(path);
@@ -153,14 +154,14 @@ public class WebscrapperGUI implements SearchForm
 
 			String path="exportHTML";
 			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Choose file path");
-			dialog.setHeaderText("Where do You want to export file?");
+			dialog.setTitle("Choose HTML file path");
+			dialog.setHeaderText("Enter path to save your search results");
 			dialog.setContentText("File name");
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent())
 			{
-					path = result.get();
+					path = result.get()+".html";
 			}
 			exporter.ExportToHTML(path);
 		});

@@ -12,6 +12,7 @@ public class App extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		 primaryStage.setScene(new WebscrapperGUI().getScene());
+		 primaryStage.setTitle("Webscrapper");
          primaryStage.show();
 	}
 }
