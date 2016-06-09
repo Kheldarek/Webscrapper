@@ -102,10 +102,16 @@ public final class FileSelector extends Application {
 		String tmp;
 		if(openUrl) {
 			tmp = x.urls.getText();
+			if(!tmp.equals(""))
 			x.urls.setText(tmp + ";" + contents.toString());
+			else
+				x.urls.setText(contents.toString());
 		} else {
 			tmp = x.keywords.getText();
-			x.keywords.setText(tmp + ";" + contents.toString());
+			if(!tmp.equals(""))
+			    x.keywords.setText(tmp + ";" + contents.toString());
+			else
+				x.keywords.setText(contents.toString());
 		}
 
 	}

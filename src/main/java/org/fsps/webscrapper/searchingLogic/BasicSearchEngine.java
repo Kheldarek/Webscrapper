@@ -16,12 +16,12 @@ public class BasicSearchEngine implements SearchEngine {
 
 	public List<WebPage> findByKeywords(List<String> keywords, List<WebPage> startPages, int deepLevel) {
 		this.deepLevel = deepLevel;
-		search(keywords, startPages, this::searchTreeFromStartPage, 5);
+		search(keywords, startPages, this::searchTreeFromStartPage, 10);
 		return results;
 	}
 
 	private void searchDeep(List<String> keywords, List<WebPage> startPages) {
-		search(keywords, startPages, this::searchSublinks, 5);
+		search(keywords, startPages, this::searchSublinks, 10);
 	}
 
 	private void search(List<String> keywords, List<WebPage> startPages,
