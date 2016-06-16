@@ -1,12 +1,12 @@
 package org.fsps.webscrapper.searchingLogic.page;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 public class TextualContent implements WebPage {
 	private Document parsedPage;
@@ -25,18 +25,6 @@ public class TextualContent implements WebPage {
 	@Override
 	public List<String> getLinks() {
 		return getLinksContaining("");
-	}
-	
-	@Override
-	public List<String> getLinksContaining(List<String> keywords, int urlsLimit) {
-		List<String> result = new ArrayList<>();
-		for(String match : keywords) {
-			result.addAll(getLinksContaining(match));
-		}
-		if(result.size() > urlsLimit) {
-			return result.subList(0, urlsLimit);
-		}
-		return result;
 	}
 
 	@Override

@@ -6,18 +6,41 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fsps.webscrapper.searchingLogic.page.SearchBar;
 import org.fsps.webscrapper.searchingLogic.page.TextualContent;
-import org.fsps.webscrapper.searchingLogic.page.WebPage;
 
 public class JsoupParser implements WebPageParser {
 	@Override
-	public List<WebPage> parse(List<String> urls) {
-		List<WebPage> result = new ArrayList<>();
+	public List<SearchBar> parseSearchBar(List<String> urls) {
+        List<SearchBar> result = new ArrayList<>();
+        for(String url : urls) {
+            SearchBar page = null;
+            try {
+                page = parseSearchBar(url);
+            } catch(IOException ioe) {
+                System.err.println("Error while parsing page: " + url);
+            }
+            if(page != null) {
+                result.add(page);
+            }
+        }
+        return result;
+	}
+
+	@Override
+	public SearchBar parseSearchBar(String url) throws IOException {
+		return new SearchBar(connect(url).get(), url);
+	}
+
+	@Override
+	public List<TextualContent> parseResult(List<String> urls) {
+		List<TextualContent> result = new ArrayList<>();
 		for(String url : urls) {
-			WebPage page = null;
+			TextualContent page = null;
 			try {
-				page = parse(url);
+				page = parseResult(url);
 			} catch(IOException ioe) {
+                System.err.println("Error while parsing page: " + url);
 			}
 			if(page != null) {
 				result.add(page);
@@ -27,9 +50,7 @@ public class JsoupParser implements WebPageParser {
 	}
 
 	@Override
-	public WebPage parse(String url) throws IOException {
-		WebPage parsingResult = null;
-		parsingResult = new TextualContent(connect(url).get(), url);
-		return parsingResult;
+	public TextualContent parseResult(String url) throws IOException {
+		return new TextualContent(connect(url).get(), url);
 	}
 }

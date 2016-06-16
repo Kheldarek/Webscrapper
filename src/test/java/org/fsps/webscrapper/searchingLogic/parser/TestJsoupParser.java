@@ -18,19 +18,19 @@ public class TestJsoupParser {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testURLWithoutHttpPrefix() throws IOException {
-		parser.parse("www.google.com");
+		parser.parseResult("www.google.com");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testURLWithoutHttpAndWWWPrefix() throws IOException {
-		parser.parse("google.com");
+		parser.parseResult("google.com");
 	}
 	
 	@Test
 	public void testParserReturnWebPage() throws IOException {
-		WebPage page = parser.parse("http://google.com");
+		WebPage page = parser.parseResult("http://google.com");
 		assertNotNull(page);
-		page = parser.parse("http://www.google.com");
+		page = parser.parseResult("http://www.google.com");
 		assertNotNull(page);
 	}
 }
