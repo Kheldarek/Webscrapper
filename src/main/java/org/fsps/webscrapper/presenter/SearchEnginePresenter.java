@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import org.fsps.webscrapper.searchingLogic.SearchEngine;
 import org.fsps.webscrapper.searchingLogic.page.SearchBar;
 import org.fsps.webscrapper.searchingLogic.page.TextualContent;
@@ -23,6 +24,7 @@ public class SearchEnginePresenter implements SeekPresenter {
 	@Override
 	public void findByKeywords(SearchForm sourceView, List<String> keywords, List<String> urls, int searchingLevel)
 			throws IOException {
+
 		List<SearchBar> bunchOfSearchPages = parser.parseSearchBar(urls);
         List<TextualContent> resultPages = searchEngine.findByKeywords(keywords, bunchOfSearchPages);
 		List<List<String>> results = new ArrayList<>();
@@ -31,7 +33,7 @@ public class SearchEnginePresenter implements SeekPresenter {
 			resUrls.add(currentPage.getSourceUrl());
 			results.add(currentPage.getParagraphsContaining(keywords));
 		}
-		sourceView.actualizeResultSet(results, resUrls);
+		Platform.runLater(()->sourceView.actualizeResultSet(results, resUrls));
 
 	}
 }

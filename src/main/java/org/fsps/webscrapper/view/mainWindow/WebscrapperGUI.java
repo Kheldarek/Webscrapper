@@ -37,6 +37,7 @@ public class WebscrapperGUI implements SearchForm
 	private List<List<String>> paragraphsList;
 	private List<String> urlsList;
 	private Exporter exporter;
+	private Alert searchAlert;
 
 
 	public WebscrapperGUI() throws IOException
@@ -117,19 +118,46 @@ public class WebscrapperGUI implements SearchForm
 
 		searchBtn.setOnAction(event -> {
 
+
+
 			presenter = new SearchEnginePresenter(new BasicSearchEngine(), new JsoupParser());
-			try
-			{
-				presenter.findByKeywords(mainwindow, CreateKeywordsList(), CreateUrlList(), depth);
+
+
+				Platform.runLater(()->ShowSearchDialog());
+				new Thread(() -> {
+					try
+					{
+						presenter.findByKeywords(mainwindow, CreateKeywordsList(), CreateUrlList(), depth);
+					}
+					catch(Exception e)
+					{
+						System.err.println(e.getMessage());
+					}
+				}).start();
+
+
 
 
 				//Search
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+
 
 		});
+
+	}
+	private void ShowSearchDialog()
+	{
+
+
+			searchAlert = new Alert(Alert.AlertType.INFORMATION);
+			searchAlert.setTitle("Searching");
+			searchAlert.setHeaderText("We are scrapping pages now");
+			searchAlert.setContentText("Searching....");
+			searchAlert.showAndWait();
+
+	}
+	public void CloseSearchAlert()
+	{
+		searchAlert.close();
 	}
 	private void SetExportEvents()
 	{
@@ -186,6 +214,7 @@ public class WebscrapperGUI implements SearchForm
 		urlsList = (List<String>)urls;
 		exporter = new Exporter(paragraphsList,urlsList);
 		SetExportEvents();
+		Platform.runLater(() -> CloseSearchAlert());
 		ShowResults(results, (List<String>) urls);
 
 	}
