@@ -45,6 +45,6 @@ public class BasicSearchEngine implements SearchEngine {
 	}
 
 	private Predicate<String> linkFilter(List<String> contentLinks) {
-		return link -> !contentLinks.contains(link);
+		return link -> !contentLinks.contains(link) && !link.contains("google");
 	}
 }
