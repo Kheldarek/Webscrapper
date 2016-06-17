@@ -150,7 +150,7 @@ public class WebscrapperGUI implements SearchForm
 
 			searchAlert = new Alert(Alert.AlertType.INFORMATION);
 			searchAlert.setTitle("Searching");
-			searchAlert.setHeaderText("We are scrapping pages now");
+			searchAlert.setHeaderText("We are scraping pages now");
 			searchAlert.setContentText("Searching....");
 			searchAlert.showAndWait();
 
